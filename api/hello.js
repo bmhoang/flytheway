@@ -1,10 +1,15 @@
-export default function handler(req, res) {
-  // CORS
+module.exports = (req, res) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "GET,POST");
+  res.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
-  res.status(200).json({
-    message: "Hello from Vercel API 🚀",
-    method: req.method
+  if (req.method === "OPTIONS") {
+    return res.status(204).end();
+  }
+
+  return res.status(200).json({
+    message: "Hello from Vercel API",
+    method: req.method,
+    now: new Date().toISOString(),
   });
-}
+};
